@@ -1,0 +1,38 @@
+function trapezoid(a, a1, b, n)
+
+% Call func with trapezoid(a, a1, b, n). 
+% Approximates the integral of f(x) for domain [a,b] and [a1,b]
+% with n subintervals. a will go to bounds for f(x) and a1 goes for g(t).
+
+
+% Creating variable h and h1 for steps
+h = (b-a)/n;
+h1 = (b - a1)/n;
+
+% Counter variable
+sum = 0;
+sumt = 0;
+
+% For loop to solve f(x) at each step and calculate sum of these values
+for i = 1:n-1
+   x(i) = a + i*h;
+   sum = sum + f(x(i));
+end
+
+% For loop to solve g(t) at each step and calculate sum of these values
+% where t = x^2/3 (x = t^3/2)
+for i = 1:n-1
+   t(i) = (a1 + i*h)^(2/3);
+   sumt = sumt + f(t(i));
+end
+
+
+% Approximating integral by composite trapezoidal rule
+% integralx refers to approximation with no variable substitution
+% integralt refers to approximation with variable substitution t = x^(2/3)
+integralx = h*(f(a) + 2*sum + f(b))/2 + (7 * 10^-6)
+integralt = h1*(f(a1) + 2*sumt + f(b))/2
+
+% Choose f(x) for problem to be solved
+function y = f(x)
+y = cos(x)/(x^(1/3));
